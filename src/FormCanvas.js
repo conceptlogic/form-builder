@@ -3,7 +3,8 @@ import { useState } from "react";
 import s from "./FormCanvas.module.scss";
 
 const FormCanvas = () => {
-  const [canvasData, setCanvasData] = useState(new Array(8).fill({}));
+  const cellCount = 8;
+  const [canvasData, setCanvasData] = useState(new Array(cellCount).fill({}));
 
   const handlers = {
     // see https://stackoverflow.com/a/50233827
@@ -33,11 +34,13 @@ const FormCanvas = () => {
       e.target.className = e.target.className.replace(s.dropTarget, "");
     },
     clearCell: (e) => {
-      const nextData = Object.assign([], canvasData, {
-        [e.currentTarget.dataset.index]: {},
-      });
+      if (e.target.className === s.clearCell) {
+        const nextData = Object.assign([], canvasData, {
+          [e.currentTarget.dataset.index]: {},
+        });
 
-      setCanvasData(nextData);
+        setCanvasData(nextData);
+      }
     },
   };
 
