@@ -3,7 +3,7 @@ import { useState } from "react";
 import s from "./FormCanvas.module.scss";
 
 const FormCanvas = () => {
-  const [canvasData, setCanvasData] = useState(new Array(8).fill(null));
+  const [canvasData, setCanvasData] = useState(new Array(8).fill({}));
 
   const handlers = {
     // see https://stackoverflow.com/a/50233827
@@ -22,35 +22,54 @@ const FormCanvas = () => {
       }
     },
     drop: (e) => {
-      let next = Object.assign([], canvasData, {
+      const nextData = Object.assign([], canvasData, {
         [e.target.dataset.index]: {
           element: e.dataTransfer.getData("text/json"),
         },
       });
 
-      setCanvasData(next);
+      setCanvasData(nextData);
 
       e.target.className = e.target.className.replace(s.dropTarget, "");
     },
+    clearCell: (e) => {
+      const nextData = Object.assign([], canvasData, {
+        [e.currentTarget.dataset.index]: {},
+      });
+
+      setCanvasData(nextData);
+    },
   };
 
-  console.log(canvasData);
-
   return (
-    <div
-      className={s.formCanvas}
-      onDragOver={handlers.dragOver}
-      onDragEnter={handlers.dragEnter}
-      onDragLeave={handlers.dragLeave}
-      onDrop={handlers.drop}
-      title="Drop elements here"
-    >
-      {canvasData.map((data, i) => (
-        <div className={s.dropCell} key={i} data-index={i}>
-          {data?.element}
-        </div>
-      ))}
-    </div>
+    <>
+      <h1>Form Canvas</h1>
+
+      <div
+        className={s.formCanvas}
+        onDragOver={handlers.dragOver}
+        onDragEnter={handlers.dragEnter}
+        onDragLeave={handlers.dragLeave}
+        onDrop={handlers.drop}
+      >
+        {canvasData.map((data, i) => (
+          <div
+            className={s.dropCell}
+            key={i}
+            data-index={i}
+            onClick={handlers.clearCell}
+          >
+            {data.element && (
+              <span className={s.clearCell} title="Clear cell">
+                x
+              </span>
+            )}
+
+            {data.element}
+          </div>
+        ))}
+      </div>
+    </>
   );
 };
 

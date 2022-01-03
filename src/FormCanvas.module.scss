@@ -11,10 +11,25 @@
   border-radius: 7px;
   height: 75px;
   padding: 1rem;
+  position: relative;
   transition: all 0.5s;
+
+  &:hover {
+    .clearCell {
+      display: block;
+    }
+  }
 }
 
 .dropTarget {
   background: lighten(#277da1, 50%);
   border: dashed 1px #277da1;
+}
+
+.clearCell {
+  cursor: pointer;
+  display: none;
+  position: absolute;
+  right: 0.5rem;
+  top: 0.5rem;
 }
