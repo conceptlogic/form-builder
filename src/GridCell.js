@@ -3,9 +3,9 @@ import cx from "classnames";
 
 import nextData from "./nextData";
 
-import s from "./CanvasCell.module.scss";
+import s from "./GridCell.module.scss";
 
-const CanvasCell = ({ data, index, setCanvasData, canvasData }) => {
+const GridCell = ({ data, index, setCanvasData, canvasData }) => {
   const handlers = {
     clearCell: (e) => {
       if (e.target.className === s.clearCell) {
@@ -37,11 +37,11 @@ const CanvasCell = ({ data, index, setCanvasData, canvasData }) => {
   );
 };
 
-CanvasCell.propTypes = {
+GridCell.propTypes = {
   data: pt.object.isRequired,
   index: pt.number.isRequired,
   setCanvasData: pt.func.isRequired,
   canvasData: pt.array.isRequired,
 };
 
-export default CanvasCell;
+export default GridCell;

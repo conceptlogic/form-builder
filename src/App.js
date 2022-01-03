@@ -1,12 +1,12 @@
 import ElementTray from "./ElementTray";
-import FormCanvas from "./FormCanvas";
+import FormGrid from "./FormGrid";
 
 const App = () => {
   return (
     <div className="App">
       <ElementTray />
 
-      <FormCanvas />
+      <FormGrid />
     </div>
   );
 };

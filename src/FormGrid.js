@@ -1,11 +1,11 @@
 import { useState } from "react";
 
-import CanvasCell from "./CanvasCell";
+import GridCell from "./GridCell";
 import nextData from "./nextData";
 
-import s from "./FormCanvas.module.scss";
+import s from "./FormGrid.module.scss";
 
-const FormCanvas = () => {
+const FormGrid = () => {
   const cellCount = 8;
   const [canvasData, setCanvasData] = useState(new Array(cellCount).fill({}));
 
@@ -48,7 +48,7 @@ const FormCanvas = () => {
       onDrop={handlers.drop}
     >
       {canvasData.map((data, i) => (
-        <CanvasCell
+        <GridCell
           data={data}
           key={i}
           index={i}
@@ -60,4 +60,4 @@ const FormCanvas = () => {
   );
 };
 
-export default FormCanvas;
+export default FormGrid;
