@@ -1,0 +1,20 @@
+.formCanvas {
+  column-gap: 10px;
+  display: grid;
+  grid-template-columns: repeat(2, 250px [col-start]);
+  row-gap: 15px;
+}
+
+.dropCell {
+  background: #f8f9fa;
+  border: solid 1px darken(#f8f9fa, 10%);
+  border-radius: 7px;
+  height: 75px;
+  padding: 1rem;
+  transition: all 0.5s;
+}
+
+.dropTarget {
+  background: lighten(#277da1, 50%);
+  border: dashed 1px #277da1;
+}

@@ -1,0 +1,52 @@
+.elementTray {
+  padding: 0;
+
+  li {
+    border: solid 2px gray;
+    background: #f8f9fa;
+    list-style: none;
+    margin-bottom: -2px;
+    transition: all 0.5s;
+    width: 10rem;
+
+    &:hover {
+      background-color: #e9ecef;
+    }
+  }
+
+  h1 {
+    font-size: 1.2rem;
+    margin: 0;
+  }
+
+  [type="text"] {
+    background-color: #fff;
+    border: solid 1px gray;
+    border-radius: 3px;
+    padding: 0.33rem;
+    width: 100%;
+  }
+
+  button {
+    background-color: #277da1;
+    border: 0;
+    border-radius: 7px;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    width: 100%;
+  }
+}
+
+.draggable {
+  cursor: grab;
+  color: #343a40;
+  background-color: transparent;
+  padding: 1rem;
+  position: relative; // prevent chrome from showing parent styles while dragging
+  z-index: 5;
+
+  * {
+    cursor: inherit;
+    pointer-events: none;
+  }
+}
