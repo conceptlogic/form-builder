@@ -1,5 +1,8 @@
 import { useState } from "react";
 
+import CanvasCell from "./CanvasCell";
+import nextData from "./nextData";
+
 import s from "./FormCanvas.module.scss";
 
 const FormCanvas = () => {
@@ -23,56 +26,37 @@ const FormCanvas = () => {
       }
     },
     drop: (e) => {
-      const nextData = Object.assign([], canvasData, {
-        [e.target.dataset.index]: {
+      const next = nextData({
+        canvasData,
+        index: e.target.dataset.index,
+        indexData: {
           element: e.dataTransfer.getData("text/json"),
         },
       });
 
-      setCanvasData(nextData);
-
+      setCanvasData(next);
       e.target.className = e.target.className.replace(s.dropTarget, "");
-    },
-    clearCell: (e) => {
-      if (e.target.className === s.clearCell) {
-        const nextData = Object.assign([], canvasData, {
-          [e.currentTarget.dataset.index]: {},
-        });
-
-        setCanvasData(nextData);
-      }
     },
   };
 
   return (
-    <>
-      <h1>Form Canvas</h1>
-
-      <div
-        className={s.formCanvas}
-        onDragOver={handlers.dragOver}
-        onDragEnter={handlers.dragEnter}
-        onDragLeave={handlers.dragLeave}
-        onDrop={handlers.drop}
-      >
-        {canvasData.map((data, i) => (
-          <div
-            className={s.dropCell}
-            key={i}
-            data-index={i}
-            onClick={handlers.clearCell}
-          >
-            {data.element && (
-              <span className={s.clearCell} title="Clear cell">
-                x
-              </span>
-            )}
-
-            {data.element}
-          </div>
-        ))}
-      </div>
-    </>
+    <div
+      className={s.formCanvas}
+      onDragOver={handlers.dragOver}
+      onDragEnter={handlers.dragEnter}
+      onDragLeave={handlers.dragLeave}
+      onDrop={handlers.drop}
+    >
+      {canvasData.map((data, i) => (
+        <CanvasCell
+          data={data}
+          key={i}
+          index={i}
+          canvasData={canvasData}
+          setCanvasData={setCanvasData}
+        />
+      ))}
+    </div>
   );
 };
 

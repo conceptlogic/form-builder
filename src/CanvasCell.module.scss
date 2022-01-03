@@ -1,0 +1,28 @@
+.dropCell {
+  background-color: #f8f9fa;
+  border: solid 1px darken(#f8f9fa, 10%);
+  border-radius: 7px;
+  height: 75px;
+  padding: 1rem;
+  position: relative;
+  transition: all 0.5s;
+
+  &:hover {
+    .clearCell {
+      display: block;
+    }
+  }
+
+  &.hasElement {
+    border: 0;
+    background-color: transparent;
+  }
+}
+
+.clearCell {
+  cursor: pointer;
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
