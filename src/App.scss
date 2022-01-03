@@ -7,11 +7,11 @@ ul {
 }
 
 li {
-  border: solid 1px gray;
+  border: solid 2px gray;
   background: #f8f9fa;
   width: 10rem;
   list-style: none;
-  margin-bottom: -1px;
+  margin-bottom: -2px;
   transition: all 0.5s;
 
   &:hover {
@@ -23,6 +23,9 @@ li {
   cursor: grab;
   padding: 1rem;
   color: #343a40;
+  background-color: transparent;
+  position: relative; // prevent chrome from showing parent styles while dragging
+  z-index: 5;
 
   * {
     pointer-events: none;
@@ -40,7 +43,11 @@ h1 {
 }
 
 [type="text"] {
+  background-color: #fff;
   width: 100%;
+  padding: 0.33rem;
+  border: solid 1px gray;
+  border-radius: 3px;
 }
 
 button {
@@ -57,9 +64,18 @@ button {
   grid-template-columns: repeat(2, 250px [col-start]);
   column-gap: 10px;
   row-gap: 15px;
+}
 
-  > div {
-    outline: solid 1px red;
-    height: 75px;
-  }
+.dropCell {
+  background: #f8f9fa;
+  border-radius: 7px;
+  border: solid 1px darken(#f8f9fa, 10%);
+  padding: 1rem;
+  height: 75px;
+  transition: all 0.5s;
+}
+
+.dropTarget {
+  background: lighten(#277da1, 50%);
+  border: dashed 1px #277da1;
 }
