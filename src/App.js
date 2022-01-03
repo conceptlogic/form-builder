@@ -1,26 +1,27 @@
 import "./App.scss";
 
-const App = () => {
-  const dragStart = (e) => {
-    e.target.className = `${e.target.className} isDragging`;
-  };
-
-  const dragEnd = (e) => {
-    e.target.className = e.target.className.replace("isDragging", "");
-  };
-
-  const dragEnter = (e) => {
+const handlers = {
+  // see https://stackoverflow.com/a/50233827
+  dragOver: (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+  },
+  dragEnter: (e) => {
     if (e.target.className !== "formBuilder") {
       e.target.className = `${e.target.className} dropTarget`;
     }
-  };
-
-  const dragLeave = (e) => {
+  },
+  dragLeave: (e) => {
     if (e.target.className !== "formBuilder") {
       e.target.className = e.target.className.replace("dropTarget", "");
     }
-  };
+  },
+  drop: (e) => {
+    e.target.className = e.target.className.replace("dropTarget", "");
+  },
+};
 
+const App = () => {
   return (
     <div className="App">
       <header>
@@ -30,7 +31,7 @@ const App = () => {
         </p>
       </header>
 
-      <ul onDragStart={dragStart} onDragEnd={dragEnd}>
+      <ul onDragStart={handlers.dragStart} onDragEnd={handlers.dragEnd}>
         <li title="Add a Heading">
           <div className="draggable" draggable>
             <h1>Heading</h1>
@@ -53,8 +54,10 @@ const App = () => {
       <h2>Form Canvas</h2>
       <div
         className="formBuilder"
-        onDragEnter={dragEnter}
-        onDragLeave={dragLeave}
+        onDragOver={handlers.dragOver}
+        onDragEnter={handlers.dragEnter}
+        onDragLeave={handlers.dragLeave}
+        onDrop={handlers.drop}
         title="Drop elements here"
       >
         <div className="dropCell"></div>
