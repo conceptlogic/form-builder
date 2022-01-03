@@ -1,0 +1,31 @@
+body {
+  padding: 1rem;
+}
+
+ul {
+  padding: 0;
+}
+
+li {
+  border: solid 1px gray;
+  background: lightgray;
+  cursor: grab;
+  padding: 1rem;
+  width: 10rem;
+  list-style: none;
+  margin-bottom: -1px;
+
+  * {
+    pointer-events: none;
+    cursor: inherit;
+  }
+}
+
+h1 {
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+[type="text"] {
+  width: 100%;
+}
