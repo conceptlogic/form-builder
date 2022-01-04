@@ -1,6 +1,8 @@
 const nextData = ({ formData, index, indexData }) => {
-  // if another object in formData was being edited, unset its isEditing property now
-  if (indexData.isEditing) {
+  const isNew = Object.keys(formData[index]).length === 0;
+
+  // unset current edit index if editing a different entry or adding a new entry
+  if (indexData.isEditing || isNew) {
     const currentEditingIndex = formData.findIndex((x) => x.isEditing);
 
     if (currentEditingIndex > -1) {

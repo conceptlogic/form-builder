@@ -76,7 +76,7 @@ const GridCell = ({ data, index, setFormData }) => {
 
   return (
     <div
-      className={cx(s.dropCell, getClassNames())}
+      className={cx(s.dropCell, getClassNames(), data.isEditing && s.isEditing)}
       data-index={index}
       onDragOver={handlers.dragOver}
       onDragEnter={handlers.dragEnter}

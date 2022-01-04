@@ -1,31 +1,61 @@
+import { useState } from "react";
+
 import { elementIdentifiers } from "./constants";
 
 import s from "./PropertyEditor.module.scss";
 
 const HeadingEditor = ({ editing }) => {
+  const [text, setText] = useState();
+
   return (
     <div>
       <label htmlFor="headingText">Heading Text</label>
-      <input id="headingText" type="text" value={editing?.text} />
+      <input
+        id="headingText"
+        type="text"
+        value={text || editing?.text}
+        onChange={(e) => {
+          setText(e.target.value);
+        }}
+      />
     </div>
   );
 };
 
 const ButtonEditor = ({ editing }) => {
+  const [text, setText] = useState();
+
   return (
     <div>
       <label htmlFor="buttonText">Button Text</label>
-      <input id="buttonText" type="text" value={editing?.text} />
+      <input
+        id="buttonText"
+        type="text"
+        value={text || editing?.text}
+        onChange={(e) => {
+          setText(e.target.value);
+        }}
+      />
     </div>
   );
 };
 
 const TextInputEditor = ({ editing }) => {
+  const [label, setLabel] = useState();
+  const [placeholder, setPlaceholder] = useState();
+
   return (
     <>
       <div className={s.row}>
         <label htmlFor="buttonLabel">Label</label>
-        <input id="buttonLabel" type="text" value={editing?.label} />
+        <input
+          id="buttonLabel"
+          type="text"
+          value={label || editing?.label}
+          onChange={(e) => {
+            setLabel(e.target.value);
+          }}
+        />
       </div>
 
       <div className={s.row}>
@@ -33,7 +63,10 @@ const TextInputEditor = ({ editing }) => {
         <input
           id="buttonPlaceholder"
           type="text"
-          value={editing?.placeholder}
+          value={placeholder || editing?.placeholder}
+          onChange={(e) => {
+            setPlaceholder(e.target.value);
+          }}
         />
       </div>
     </>
@@ -44,16 +77,13 @@ const PropertyEditor = ({ formData }) => {
   const editing = formData.find((x) => x.isEditing);
 
   const getEditor = () => {
-    switch (editing?.element) {
-      case elementIdentifiers.heading:
-        return <HeadingEditor editing={editing} />;
-      case elementIdentifiers.textInput:
-        return <TextInputEditor editing={editing} />;
-      case elementIdentifiers.button:
-        return <ButtonEditor editing={editing} />;
-      default:
-        break;
-    }
+    const lookup = {
+      [elementIdentifiers.heading]: <HeadingEditor editing={editing} />,
+      [elementIdentifiers.textInput]: <TextInputEditor editing={editing} />,
+      [elementIdentifiers.button]: <ButtonEditor editing={editing} />,
+    };
+
+    return lookup[editing?.element];
   };
 
   if (!editing?.element) {
