@@ -2,6 +2,7 @@ import pt from "prop-types";
 import cx from "classnames";
 
 import nextData from "./nextData";
+import { elementIdentifiers } from "./constants";
 
 import s from "./GridCell.module.scss";
 
@@ -20,6 +21,14 @@ const GridCell = ({ data, index, setCanvasData, canvasData }) => {
     },
   };
 
+  const componentLookup = {
+    [elementIdentifiers.heading]: <h1>Heading</h1>,
+    [elementIdentifiers.button]: <button>Button</button>,
+    [elementIdentifiers.textInput]: (
+      <input type="text" placeholder="Text Input" />
+    ),
+  };
+
   return (
     <div
       className={cx(s.dropCell, data.element && s.hasElement)}
@@ -32,7 +41,7 @@ const GridCell = ({ data, index, setCanvasData, canvasData }) => {
         </span>
       )}
 
-      {data.element}
+      {componentLookup[data.element]}
     </div>
   );
 };

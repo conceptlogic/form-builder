@@ -14,7 +14,7 @@ const ElementTray = () => {
       <header>
         <h1>Form Builder</h1>
         <p>
-          Drag elements from the list below onto grid to build and customize
+          Drag elements from the list below onto the grid to build and customize
           your form.
         </p>
       </header>

@@ -16,14 +16,12 @@ const FormGrid = () => {
       e.preventDefault();
     },
     dragEnter: (e) => {
-      if (e.target.className !== s.formCanvas) {
+      if (e.target.className !== s.container && e.target.className !== s.grid) {
         e.target.className = `${e.target.className} ${s.dropTarget}`;
       }
     },
     dragLeave: (e) => {
-      if (e.target.className !== s.formCanvas) {
-        e.target.className = e.target.className.replace(s.dropTarget, "");
-      }
+      e.target.className = e.target.className.replace(s.dropTarget, "");
     },
     drop: (e) => {
       const next = nextData({
@@ -40,22 +38,24 @@ const FormGrid = () => {
   };
 
   return (
-    <div
-      className={s.formCanvas}
-      onDragOver={handlers.dragOver}
-      onDragEnter={handlers.dragEnter}
-      onDragLeave={handlers.dragLeave}
-      onDrop={handlers.drop}
-    >
-      {canvasData.map((data, i) => (
-        <GridCell
-          data={data}
-          key={i}
-          index={i}
-          canvasData={canvasData}
-          setCanvasData={setCanvasData}
-        />
-      ))}
+    <div className={s.container}>
+      <div
+        className={s.grid}
+        onDragOver={handlers.dragOver}
+        onDragEnter={handlers.dragEnter}
+        onDragLeave={handlers.dragLeave}
+        onDrop={handlers.drop}
+      >
+        {canvasData.map((data, i) => (
+          <GridCell
+            data={data}
+            key={i}
+            index={i}
+            canvasData={canvasData}
+            setCanvasData={setCanvasData}
+          />
+        ))}
+      </div>
     </div>
   );
 };
