@@ -1,4 +1,5 @@
 import { useState } from "react";
+import pt from "prop-types";
 
 import { elementIdentifiers } from "./constants";
 
@@ -12,8 +13,9 @@ const HeadingEditor = ({ editing }) => {
       <label htmlFor="headingText">Heading Text</label>
       <input
         id="headingText"
+        name="headingText"
         type="text"
-        value={text || editing?.text}
+        value={text ?? editing?.text}
         onChange={(e) => {
           setText(e.target.value);
         }}
@@ -30,8 +32,9 @@ const ButtonEditor = ({ editing }) => {
       <label htmlFor="buttonText">Button Text</label>
       <input
         id="buttonText"
+        name="buttonText"
         type="text"
-        value={text || editing?.text}
+        value={text ?? editing?.text}
         onChange={(e) => {
           setText(e.target.value);
         }}
@@ -50,8 +53,9 @@ const TextInputEditor = ({ editing }) => {
         <label htmlFor="buttonLabel">Label</label>
         <input
           id="buttonLabel"
+          name="buttonLabel"
           type="text"
-          value={label || editing?.label}
+          value={label ?? editing?.label}
           onChange={(e) => {
             setLabel(e.target.value);
           }}
@@ -62,8 +66,9 @@ const TextInputEditor = ({ editing }) => {
         <label htmlFor="buttonPlaceholder">Placeholder</label>
         <input
           id="buttonPlaceholder"
+          name="buttonPlaceholder"
           type="text"
-          value={placeholder || editing?.placeholder}
+          value={placeholder ?? editing?.placeholder}
           onChange={(e) => {
             setPlaceholder(e.target.value);
           }}
@@ -73,14 +78,21 @@ const TextInputEditor = ({ editing }) => {
   );
 };
 
-const PropertyEditor = ({ formData }) => {
-  const editing = formData.find((x) => x.isEditing);
+const PropertyEditor = ({ formData, setFormData }) => {
+  const index = formData.findIndex((x) => x.isEditing);
+  const editing = formData[index];
 
   const getEditor = () => {
     const lookup = {
-      [elementIdentifiers.heading]: <HeadingEditor editing={editing} />,
-      [elementIdentifiers.textInput]: <TextInputEditor editing={editing} />,
-      [elementIdentifiers.button]: <ButtonEditor editing={editing} />,
+      [elementIdentifiers.heading]: (
+        <HeadingEditor editing={editing} index={index} />
+      ),
+      [elementIdentifiers.textInput]: (
+        <TextInputEditor editing={editing} index={index} />
+      ),
+      [elementIdentifiers.button]: (
+        <ButtonEditor editing={editing} index={index} />
+      ),
     };
 
     return lookup[editing?.element];
@@ -90,20 +102,60 @@ const PropertyEditor = ({ formData }) => {
     return null;
   }
 
+  const submitForm = (e) => {
+    e.preventDefault();
+
+    const elements = e.target.elements;
+    let data = {
+      isEditing: false,
+    };
+
+    switch (editing?.element) {
+      case elementIdentifiers.button:
+        data.text = elements.buttonText.value;
+        break;
+      case elementIdentifiers.heading:
+        data.text = elements.headingText.value;
+        break;
+      case elementIdentifiers.textInput:
+        data.placeholder = elements.buttonPlaceholder.value;
+        data.label = elements.buttonLabel.value;
+        break;
+      default:
+        break;
+    }
+
+    setFormData({ index, indexData: { ...editing, ...data } });
+  };
+
   return (
-    <div>
+    <form onSubmit={submitForm} className={s.propertyEditor}>
       {getEditor()}
 
       <ul className={s.links}>
         <li>
-          <a href="#">Apply</a>
+          <button type="submit">Apply</button>
         </li>
         <li>
-          <a href="#">Cancel</a>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+
+              editing.isEditing = false;
+              setFormData({ index, indexData: editing });
+            }}
+          >
+            Cancel
+          </button>
         </li>
       </ul>
-    </div>
+    </form>
   );
+};
+
+PropertyEditor.propTypes = {
+  formData: pt.array.isRequired,
+  setFormData: pt.func.isRequired,
 };
 
 export default PropertyEditor;

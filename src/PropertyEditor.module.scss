@@ -1,7 +1,9 @@
-label {
-  display: block;
-  font-size: 0.75rem;
-  margin-bottom: 0.5rem;
+.propertyEditor {
+  label {
+    display: block;
+    font-size: 0.75rem;
+    margin-bottom: 0.5rem;
+  }
 }
 
 .row + .row {
@@ -14,13 +16,12 @@ label {
 
   li {
     display: inline;
-    font-size: 0.75rem;
     list-style: none;
     margin-left: 1rem;
   }
 
-  a {
-    color: #277da1;
-    text-decoration: none;
+  button {
+    cursor: pointer;
+    font-size: 0.75rem;
   }
 }

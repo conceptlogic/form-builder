@@ -40,6 +40,13 @@
     @include heading;
   }
 
+  .label {
+    display: block;
+    font-size: 0.75rem;
+    margin-bottom: 0.5rem;
+    width: 100%;
+    text-align: left;
+  }
   [type="text"] {
     @include textInput;
   }
