@@ -7,6 +7,8 @@ import { elementIdentifiers } from "./constants";
 
 import s from "./GridCell.module.scss";
 
+const isSvg = (el) => typeof el.className !== "string"; // used to ignore drag events on SVG icons, where className is an object
+
 const GridCell = ({ data, index, setFormData, formData }) => {
   const [isDragging, setIsDragging] = useState();
 
@@ -17,14 +19,16 @@ const GridCell = ({ data, index, setFormData, formData }) => {
       e.preventDefault();
     },
     dragEnter: (e) => {
-      if (e.target.className.includes(s.dropCell)) {
+      if (!isSvg(e.target) && e.target.className.includes(s.dropCell)) {
         e.target.className = `${e.target.className} ${s.isDragging}`;
         setIsDragging(true);
       }
     },
     dragLeave: (e) => {
-      e.target.className = e.target.className.replace(s.isDragging, "");
-      setIsDragging(false);
+      if (!isSvg(e.target)) {
+        e.target.className = e.target.className.replace(s.isDragging, "");
+        setIsDragging(false);
+      }
     },
     drop: (e) => {
       const next = nextData({
@@ -39,16 +43,14 @@ const GridCell = ({ data, index, setFormData, formData }) => {
       setFormData(next);
       e.target.className = e.target.className.replace(s.isDragging, "");
     },
-    clearCell: (e) => {
-      if (e.target.className === s.clearCell) {
-        const next = nextData({
-          formData,
-          index: e.currentTarget.dataset.index,
-          indexData: {},
-        });
+    clearCell: (e, index) => {
+      const next = nextData({
+        formData,
+        index,
+        indexData: {},
+      });
 
-        setFormData(next);
-      }
+      setFormData(next);
     },
   };
 
@@ -77,16 +79,24 @@ const GridCell = ({ data, index, setFormData, formData }) => {
     <div
       className={cx(s.dropCell, getClassNames())}
       data-index={index}
-      onClick={handlers.clearCell}
       onDragOver={handlers.dragOver}
       onDragEnter={handlers.dragEnter}
       onDragLeave={handlers.dragLeave}
       onDrop={handlers.drop}
     >
       {data.element && (
-        <span className={s.clearCell} title="Clear cell">
-          x
-        </span>
+        <ul className={s.controls}>
+          <li title="Edit properties">
+            <svg className="icon icon-pencil">
+              <use href="#icon-pencil"></use>
+            </svg>
+          </li>
+          <li title="Clear cell" onClick={(e) => handlers.clearCell(e, index)}>
+            <svg className="icon icon-cross">
+              <use href="#icon-cross"></use>
+            </svg>
+          </li>
+        </ul>
       )}
 
       {componentLookup[data.element]}

@@ -9,18 +9,16 @@ const FormGrid = () => {
   const [formData, setFormData] = useState(new Array(cellCount).fill({}));
 
   return (
-    <div className={s.container}>
-      <div className={s.grid}>
-        {formData.map((data, i) => (
-          <GridCell
-            data={data}
-            key={i}
-            index={i}
-            formData={formData}
-            setFormData={setFormData}
-          />
-        ))}
-      </div>
+    <div className={s.grid}>
+      {formData.map((data, i) => (
+        <GridCell
+          data={data}
+          key={i}
+          index={i}
+          formData={formData}
+          setFormData={setFormData}
+        />
+      ))}
     </div>
   );
 };

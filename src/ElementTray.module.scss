@@ -36,8 +36,4 @@
   padding: 1rem;
   position: relative; // prevent chrome from showing parent styles while dragging
   z-index: 5;
-
-  * {
-    @include nonInteractive;
-  }
 }

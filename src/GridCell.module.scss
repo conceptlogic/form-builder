@@ -4,13 +4,17 @@
   background-color: #f8f9fa;
   border: solid 1px darken(#f8f9fa, 10%);
   border-radius: 7px;
+  display: flex;
+  align-items: center;
   height: 75px;
+  justify-content: center;
   padding: 0.5rem;
   position: relative;
+  text-align: center;
   transition: all 0.5s;
 
   &:hover {
-    .clearCell {
+    .controls {
       opacity: 1;
     }
   }
@@ -18,10 +22,6 @@
   &.hasElement {
     border-color: transparent;
     background-color: transparent;
-
-    *:not(.clearCell) {
-      @include nonInteractive;
-    }
   }
 
   &.isDragging {
@@ -42,11 +42,20 @@
   }
 }
 
-.clearCell {
-  cursor: pointer;
+.controls {
+  margin: 0;
   opacity: 0;
+  padding: 0;
   position: absolute;
   right: 0;
   top: 0;
   transition: all 0.5s;
+
+  li {
+    cursor: pointer;
+    font-size: 0.75rem;
+    list-style: none;
+    display: inline;
+    margin-left: 0.5rem;
+  }
 }
