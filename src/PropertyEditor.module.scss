@@ -1,0 +1,26 @@
+label {
+  display: block;
+  font-size: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.row + .row {
+  margin-top: 1rem;
+}
+
+.links {
+  margin-top: 1rem;
+  text-align: right;
+
+  li {
+    display: inline;
+    font-size: 0.75rem;
+    list-style: none;
+    margin-left: 1rem;
+  }
+
+  a {
+    color: #277da1;
+    text-decoration-color: none;
+  }
+}

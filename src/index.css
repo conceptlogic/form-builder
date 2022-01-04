@@ -23,6 +23,11 @@ code {
   user-select: none;
 }
 
+ul {
+  margin: 0;
+  padding: 0;
+}
+
 .icon {
   display: inline-block;
   width: 1em;

@@ -10,46 +10,37 @@ const ElementTray = () => {
   };
 
   return (
-    <>
-      <header>
-        <h1>Form Builder</h1>
-        <p>
-          Drag elements from the list below onto the grid to build and customize
-          your form.
-        </p>
-      </header>
-      <ul onDragStart={handlers.dragStart} className={s.elementTray}>
-        <li title="Add a Heading">
-          <div
-            className={s.draggable}
-            draggable
-            data-element={elementIdentifiers.heading}
-          >
-            <h1>Heading</h1>
-          </div>
-        </li>
+    <ul onDragStart={handlers.dragStart} className={s.elementTray}>
+      <li title="Add a Heading">
+        <div
+          className={s.draggable}
+          draggable
+          data-element={elementIdentifiers.heading}
+        >
+          <h1>Heading</h1>
+        </div>
+      </li>
 
-        <li title="Add a Text Input">
-          <div
-            className={s.draggable}
-            draggable
-            data-element={elementIdentifiers.textInput}
-          >
-            <input type="text" placeholder="Text Input" />
-          </div>
-        </li>
+      <li title="Add a Text Input">
+        <div
+          className={s.draggable}
+          draggable
+          data-element={elementIdentifiers.textInput}
+        >
+          <input type="text" placeholder="Text Input" />
+        </div>
+      </li>
 
-        <li title="Add a Button">
-          <div
-            className={s.draggable}
-            draggable
-            data-element={elementIdentifiers.button}
-          >
-            <button>Button</button>
-          </div>
-        </li>
-      </ul>
-    </>
+      <li title="Add a Button">
+        <div
+          className={s.draggable}
+          draggable
+          data-element={elementIdentifiers.button}
+        >
+          <button>Button</button>
+        </div>
+      </li>
+    </ul>
   );
 };
 

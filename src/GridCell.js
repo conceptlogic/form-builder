@@ -2,14 +2,13 @@ import { useState } from "react";
 import pt from "prop-types";
 import cx from "classnames";
 
-import nextData from "./nextData";
 import { elementIdentifiers } from "./constants";
 
 import s from "./GridCell.module.scss";
 
 const isSvg = (el) => typeof el.className !== "string"; // used to ignore drag events on SVG icons, where className is an object
 
-const GridCell = ({ data, index, setFormData, formData }) => {
+const GridCell = ({ data, index, setFormData }) => {
   const [isDragging, setIsDragging] = useState();
 
   const handlers = {
@@ -31,26 +30,40 @@ const GridCell = ({ data, index, setFormData, formData }) => {
       }
     },
     drop: (e) => {
-      const next = nextData({
-        formData,
-        index: e.target.dataset.index,
-        indexData: {
-          element: e.dataTransfer.getData("text/json"),
-        },
-      });
+      const element = e.dataTransfer.getData("text/json");
+      const indexData = { element };
+
+      if (element === "heading") {
+        indexData.text = "Heading";
+      }
+
+      if (element === "button") {
+        indexData.text = "Button";
+      }
+
+      if (element === "textInput") {
+        indexData.label = "";
+        indexData.placeholder = "Text Input";
+      }
 
       setIsDragging(false);
-      setFormData(next);
+      setFormData({
+        index: e.target.dataset.index,
+        indexData,
+      });
       e.target.className = e.target.className.replace(s.isDragging, "");
     },
     clearCell: (e, index) => {
-      const next = nextData({
-        formData,
+      setFormData({
         index,
         indexData: {},
       });
-
-      setFormData(next);
+    },
+    editCell: (e, index) => {
+      setFormData({
+        index,
+        indexData: { ...data, isEditing: true },
+      });
     },
   };
 
@@ -86,7 +99,7 @@ const GridCell = ({ data, index, setFormData, formData }) => {
     >
       {data.element && (
         <ul className={s.controls}>
-          <li title="Edit properties">
+          <li title="Edit" onClick={(e) => handlers.editCell(e, index)}>
             <svg className="icon icon-pencil">
               <use href="#icon-pencil"></use>
             </svg>
@@ -108,7 +121,6 @@ GridCell.propTypes = {
   data: pt.object.isRequired,
   index: pt.number.isRequired,
   setFormData: pt.func.isRequired,
-  formData: pt.array.isRequired,
 };
 
 export default GridCell;
