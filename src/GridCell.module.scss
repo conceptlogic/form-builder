@@ -1,9 +1,11 @@
+@import "./mixins";
+
 .dropCell {
   background-color: #f8f9fa;
   border: solid 1px darken(#f8f9fa, 10%);
   border-radius: 7px;
   height: 75px;
-  padding: 1rem;
+  padding: 0.5rem;
   position: relative;
   transition: all 0.5s;
 
@@ -18,13 +20,25 @@
     background-color: transparent;
 
     *:not(.clearCell) {
-      pointer-events: none;
+      @include nonInteractive;
     }
   }
 
   &.isDragging {
     background-color: lighten(#277da1, 50%);
     border: dashed 1px #277da1;
+  }
+
+  h1 {
+    @include heading;
+  }
+
+  [type="text"] {
+    @include textInput;
+  }
+
+  button {
+    @include button;
   }
 }
 
