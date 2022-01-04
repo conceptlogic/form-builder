@@ -1,5 +1,5 @@
-const nextData = ({ canvasData, index, indexData }) => {
-  return Object.assign([], canvasData, {
+const nextData = ({ formData, index, indexData }) => {
+  return Object.assign([], formData, {
     [index]: indexData,
   });
 };

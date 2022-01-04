@@ -1,3 +1,4 @@
+import { useState } from "react";
 import pt from "prop-types";
 import cx from "classnames";
 
@@ -6,7 +7,9 @@ import { elementIdentifiers } from "./constants";
 
 import s from "./GridCell.module.scss";
 
-const GridCell = ({ data, index, setCanvasData, canvasData }) => {
+const GridCell = ({ data, index, setFormData, formData }) => {
+  const [isDragging, setIsDragging] = useState();
+
   const handlers = {
     // see https://stackoverflow.com/a/50233827
     dragOver: (e) => {
@@ -14,34 +17,37 @@ const GridCell = ({ data, index, setCanvasData, canvasData }) => {
       e.preventDefault();
     },
     dragEnter: (e) => {
-      if (e.target.className !== s.container && e.target.className !== s.grid) {
-        e.target.className = `${e.target.className} ${s.dropTarget}`;
+      if (e.target.className.includes(s.dropCell)) {
+        e.target.className = `${e.target.className} ${s.isDragging}`;
+        setIsDragging(true);
       }
     },
     dragLeave: (e) => {
-      e.target.className = e.target.className.replace(s.dropTarget, "");
+      e.target.className = e.target.className.replace(s.isDragging, "");
+      setIsDragging(false);
     },
     drop: (e) => {
       const next = nextData({
-        canvasData,
+        formData,
         index: e.target.dataset.index,
         indexData: {
           element: e.dataTransfer.getData("text/json"),
         },
       });
 
-      setCanvasData(next);
-      e.target.className = e.target.className.replace(s.dropTarget, "");
+      setIsDragging(false);
+      setFormData(next);
+      e.target.className = e.target.className.replace(s.isDragging, "");
     },
     clearCell: (e) => {
       if (e.target.className === s.clearCell) {
         const next = nextData({
-          canvasData,
+          formData,
           index: e.currentTarget.dataset.index,
           indexData: {},
         });
 
-        setCanvasData(next);
+        setFormData(next);
       }
     },
   };
@@ -54,9 +60,22 @@ const GridCell = ({ data, index, setCanvasData, canvasData }) => {
     ),
   };
 
+  const getClassNames = () => {
+    let classNames = "";
+
+    if (isDragging && data.element) {
+      classNames = [s.isDragging, s.hasElement];
+    }
+    if (data.element) {
+      classNames = s.hasElement;
+    }
+
+    return classNames;
+  };
+
   return (
     <div
-      className={cx(s.dropCell, data.element && s.hasElement)}
+      className={cx(s.dropCell, getClassNames())}
       data-index={index}
       onClick={handlers.clearCell}
       onDragOver={handlers.dragOver}
@@ -78,8 +97,8 @@ const GridCell = ({ data, index, setCanvasData, canvasData }) => {
 GridCell.propTypes = {
   data: pt.object.isRequired,
   index: pt.number.isRequired,
-  setCanvasData: pt.func.isRequired,
-  canvasData: pt.array.isRequired,
+  setFormData: pt.func.isRequired,
+  formData: pt.array.isRequired,
 };
 
 export default GridCell;

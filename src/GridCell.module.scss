@@ -9,25 +9,30 @@
 
   &:hover {
     .clearCell {
-      display: block;
+      opacity: 1;
     }
   }
 
   &.hasElement {
-    border: 0;
+    border-color: transparent;
     background-color: transparent;
-  }
-}
 
-.dropTarget {
-  background-color: lighten(#277da1, 50%);
-  border: dashed 1px #277da1;
+    *:not(.clearCell) {
+      pointer-events: none;
+    }
+  }
+
+  &.isDragging {
+    background-color: lighten(#277da1, 50%);
+    border: dashed 1px #277da1;
+  }
 }
 
 .clearCell {
   cursor: pointer;
-  display: none;
+  opacity: 0;
   position: absolute;
   right: 0;
   top: 0;
+  transition: all 0.5s;
 }
