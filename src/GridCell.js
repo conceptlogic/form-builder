@@ -8,6 +8,31 @@ import s from "./GridCell.module.scss";
 
 const GridCell = ({ data, index, setCanvasData, canvasData }) => {
   const handlers = {
+    // see https://stackoverflow.com/a/50233827
+    dragOver: (e) => {
+      e.stopPropagation();
+      e.preventDefault();
+    },
+    dragEnter: (e) => {
+      if (e.target.className !== s.container && e.target.className !== s.grid) {
+        e.target.className = `${e.target.className} ${s.dropTarget}`;
+      }
+    },
+    dragLeave: (e) => {
+      e.target.className = e.target.className.replace(s.dropTarget, "");
+    },
+    drop: (e) => {
+      const next = nextData({
+        canvasData,
+        index: e.target.dataset.index,
+        indexData: {
+          element: e.dataTransfer.getData("text/json"),
+        },
+      });
+
+      setCanvasData(next);
+      e.target.className = e.target.className.replace(s.dropTarget, "");
+    },
     clearCell: (e) => {
       if (e.target.className === s.clearCell) {
         const next = nextData({
@@ -34,6 +59,10 @@ const GridCell = ({ data, index, setCanvasData, canvasData }) => {
       className={cx(s.dropCell, data.element && s.hasElement)}
       data-index={index}
       onClick={handlers.clearCell}
+      onDragOver={handlers.dragOver}
+      onDragEnter={handlers.dragEnter}
+      onDragLeave={handlers.dragLeave}
+      onDrop={handlers.drop}
     >
       {data.element && (
         <span className={s.clearCell} title="Clear cell">

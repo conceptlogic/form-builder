@@ -12,8 +12,3 @@
   grid-template-columns: repeat(2, 250px [col-start]);
   row-gap: 15px;
 }
-
-.dropTarget {
-  background-color: lighten(#277da1, 50%);
-  border: dashed 1px #277da1;
-}

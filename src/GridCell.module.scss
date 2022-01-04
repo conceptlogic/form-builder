@@ -19,6 +19,11 @@
   }
 }
 
+.dropTarget {
+  background-color: lighten(#277da1, 50%);
+  border: dashed 1px #277da1;
+}
+
 .clearCell {
   cursor: pointer;
   display: none;
