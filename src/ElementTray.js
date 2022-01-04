@@ -5,7 +5,24 @@ import s from "./ElementTray.module.scss";
 const ElementTray = () => {
   const handlers = {
     dragStart: (e) => {
-      e.dataTransfer.setData("text/json", e.target.dataset.element);
+      const element = e.target.dataset.element;
+      const data = {
+        element,
+      };
+
+      if (
+        element === elementIdentifiers.heading ||
+        element === elementIdentifiers.button
+      ) {
+        data.text = e.target.innerText;
+      }
+
+      if (element === elementIdentifiers.textInput) {
+        data.label = "";
+        data.placeholder = e.target.querySelector("input").placeholder;
+      }
+
+      e.dataTransfer.setData("text/json", JSON.stringify(data));
     },
   };
 

@@ -30,21 +30,7 @@ const GridCell = ({ data, index, setFormData }) => {
       }
     },
     drop: (e) => {
-      const element = e.dataTransfer.getData("text/json");
-      const indexData = { element };
-
-      if (element === "heading") {
-        indexData.text = "Heading";
-      }
-
-      if (element === "button") {
-        indexData.text = "Button";
-      }
-
-      if (element === "textInput") {
-        indexData.label = "";
-        indexData.placeholder = "Text Input";
-      }
+      const indexData = JSON.parse(e.dataTransfer.getData("text/json"));
 
       setIsDragging(false);
       setFormData({
