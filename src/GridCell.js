@@ -10,7 +10,7 @@ const isSvg = (el) => typeof el.className !== "string"; // used to ignore drag e
 
 const GridCell = ({ data, index, setFormData }) => {
   const [isDragging, setIsDragging] = useState();
-  console.log(data);
+
   const handlers = {
     // see https://stackoverflow.com/a/50233827
     dragOver: (e) => {
@@ -56,21 +56,21 @@ const GridCell = ({ data, index, setFormData }) => {
   const componentLookup = {
     [elementIdentifiers.heading]: <h1>{data.text || "Heading"}</h1>,
     [elementIdentifiers.button]: (
-      <button tabindex="-1">{data.text || "Button"}</button>
+      <button tabIndex="-1">{data.text || "Button"}</button>
     ),
     [elementIdentifiers.textInput]: (
-      <div style={{ width: "100%" }}>
+      <>
         {data.label && (
-          <label tabindex="-1" className={s.label}>
+          <label tabIndex="-1" className={s.label}>
             {data.label}
           </label>
         )}
         <input
-          tabindex="-1"
+          tabIndex="-1"
           type="text"
           placeholder={data.placeholder || "Text Input"}
         />
-      </div>
+      </>
     ),
   };
 

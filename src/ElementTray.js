@@ -44,7 +44,7 @@ const ElementTray = () => {
           draggable
           data-element={elementIdentifiers.textInput}
         >
-          <input tabindex="-1" type="text" placeholder="Text Input" />
+          <input tabIndex="-1" type="text" placeholder="Text Input" />
         </div>
       </li>
 
@@ -54,7 +54,7 @@ const ElementTray = () => {
           draggable
           data-element={elementIdentifiers.button}
         >
-          <button tabindex="-1">Button</button>
+          <button tabIndex="-1">Button</button>
         </div>
       </li>
     </ul>

@@ -102,7 +102,7 @@ const PropertyEditor = ({ formData, setFormData }) => {
     return null;
   }
 
-  const submitForm = (e) => {
+  const applyChanges = (e) => {
     e.preventDefault();
 
     const elements = e.target.elements;
@@ -128,8 +128,15 @@ const PropertyEditor = ({ formData, setFormData }) => {
     setFormData({ index, indexData: { ...editing, ...data } });
   };
 
+  const cancelChanges = (e) => {
+    e.preventDefault();
+
+    editing.isEditing = false;
+    setFormData({ index, indexData: editing });
+  };
+
   return (
-    <form onSubmit={submitForm} className={s.propertyEditor}>
+    <form onSubmit={applyChanges} className={s.propertyEditor}>
       {getEditor()}
 
       <ul className={s.links}>
@@ -137,16 +144,7 @@ const PropertyEditor = ({ formData, setFormData }) => {
           <button type="submit">Apply</button>
         </li>
         <li>
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-
-              editing.isEditing = false;
-              setFormData({ index, indexData: editing });
-            }}
-          >
-            Cancel
-          </button>
+          <button onClick={cancelChanges}>Cancel</button>
         </li>
       </ul>
     </form>
