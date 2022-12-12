@@ -32,6 +32,10 @@ const GridCell = ({ data, index, setFormData }) => {
     drop: (e) => {
       const indexData = JSON.parse(e.dataTransfer.getData("text/json"));
 
+      if (indexData.element === "textInput") {
+        indexData.placeholder = '';
+      }
+
       setIsDragging(false);
       setFormData({
         index: e.target.dataset.index,
@@ -68,7 +72,7 @@ const GridCell = ({ data, index, setFormData }) => {
         <input
           tabIndex="-1"
           type="text"
-          placeholder={data.placeholder || "Text Input"}
+          placeholder={data.placeholder}
         />
       </>
     ),
