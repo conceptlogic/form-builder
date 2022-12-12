@@ -4,4 +4,6 @@ This project demonstrates a simple drag-and-drop form builder, built with Create
 
 To serve the app locally, run `yarn` in the project directory to install dependencies, then `yarn start` to launch.
 
+---
 
+![](https://github.com/conceptlogic/form-builder/blob/main/form-builder.gif)
