@@ -32,7 +32,7 @@ const GridCell = ({ data, index, setFormData }) => {
     drop: (e) => {
       const indexData = JSON.parse(e.dataTransfer.getData("text/json"));
 
-      if (indexData.element === "textInput") {
+      if (indexData.element === elementIdentifiers.textInput) {
         indexData.placeholder = '';
       }
 
